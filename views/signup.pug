@@ -4,8 +4,7 @@ block main
   .container
     .row
       .col-sm-8.col-sm-offset-2
-        h1
-          span.fa.fa-sign-in Signup
+        h1 Signup
     .row
       .col-sm-8.col-sm-offset-2
         if (message.length > 0)
@@ -20,4 +19,5 @@ block main
             label Password
             input.form-control(type='password', name='password')
           button.btn.btn-warning.btn-lg(type='submit') Signup
-        hr
+
+block script

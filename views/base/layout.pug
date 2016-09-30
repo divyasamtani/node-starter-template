@@ -11,7 +11,7 @@ html(lang='en')
     link(href='lib/css/bootstrap.min.css', rel='stylesheet')
     // Material Design Bootstrap
     link(href='lib/css/mdb.min.css', rel='stylesheet')
-    // Custom styles 
+    // Custom styles
     link(href='css/style.css', rel='stylesheet')
   body
     block main
@@ -24,5 +24,13 @@ html(lang='en')
     script(type='text/javascript', src='lib/js/bootstrap.min.js')
     // MDB core JavaScript
     script(type='text/javascript', src='lib/js/mdb.min.js')
+    // Map
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDeNiHwqOFmv0yfW2WpD5_6Sy19bjFQ8EY&callback=initMap', async='', defer='')
+    // Socket.io
+    script(src='/socket.io/socket.io.js')
+    // Local script
+    script(src='js/script.js')
+
+
     // Local script
     block script

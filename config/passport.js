@@ -5,6 +5,9 @@ var localStrategy = require('passport-local').Strategy;
 // Load validator
 var validator = require('validator');
 
+// Load passport Twitter
+var twitterStrategy = require('passport-twitter').Strategy;
+
 // Load user model
 var User = require('../model/user');
 
@@ -90,4 +93,46 @@ module.exports = function( passport ) {
           });
         });
     }));
+
+
+//Passport Login for Twitter
+
+  passport.use(new twitterStrategy({
+    consumerKey: "kwOL7cNGEEjqRwEA6mUyc6Ml1",
+    consumerSecret: "yygmOzKXTjkxInG1UWDLwes2ZhlfYTdqGxvyREcNxVYRqvHm5P",
+    callbackURL: "http://localhost:3000/auth/twitter/callback",
+    passReqToCallback: true
+  }, function(req, token, tokenSecret, profile, done) {
+
+      //console.log(profile);
+
+      process.nextTick(function(){
+          User.findOne( {'twitter.id' : profile.id }, function(err, user){
+            if(err){
+              return done(err);
+            }
+            if(user){
+              return done(null, user, req.flash('loginMessage', 'Logged in successfully'));
+            }else{
+              var newUser = new User();
+              newUser.twitter.id           = profile.id;
+              newUser.twitter.token        = token;
+              newUser.twitter.secret       = tokenSecret;
+              newUser.twitter.img          = profile.photos[0].value;
+              newUser.twitter.name         = profile.displayName;
+              newUser.twitter.username     = profile.username;
+
+              newUser.save(function(err){
+                if(err){
+                  console.log(err);
+                }
+                return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
+              });
+            }
+          });
+      });
+  }));
 }
+
+
+

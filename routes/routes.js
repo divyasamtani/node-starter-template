@@ -38,6 +38,7 @@ module.exports = function(app, passport){
     res.render('secret', { message: req.flash('loginMessage') });
   });
 
+
   // logout
   app.get('/logout', function(req, res){
     req.logout();
